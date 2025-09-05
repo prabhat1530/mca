@@ -1,0 +1,88 @@
+{
+  "1": {
+    "corporate_identity_number_cin": "L17119WB1915PLC002657",
+    "global_location_number_gln": null
+  },
+  "2": {
+    "name_of_the_company": "CALEDONIAN JUTE & INDUSTRIES LTD",
+    "address_of_the_registered_office": "9 BIPLABI TRAILOKYA MAHARAJSARANI\nKOLKATA\nKolkata\nWest Bengal\n700001\nIndia",
+    "email_id_of_the_company": "caledonian@dataone.in"
+  },
+  "3": {
+    "form_for_registration_of": "Creation of charge"
+  },
+  "4": {
+    "applicant_is": "The Company"
+  },
+  "5": {
+    "date_of_instrument_creating_or_modifying_charge": "30/06/2020",
+    "nature_description_of_instrument": "Memorandum of Charge/Lien over deposits (LD/2128)\nAcknowledgement of Recipt of copy of documents(LD/2252)\nSanction letter(LD/2100A)\nAttestation Memo",
+    "charge_created_or_modified_outside_india": "No"
+  },
+  "6": null,
+  "7": {
+    "charge_on": [
+      "Others"
+    ],
+    "others_specify": "Lien on Fixed Deposit"
+  },
+  "8": {
+    "consortium_finance_involved": "No",
+    "joint_charge_involved": "No",
+    "number_of_charge_holders": "1"
+  },
+  "9": {
+    "category": "Scheduled bank",
+    "name": "THE SOUTH INDIAN BANK LIMITED",
+    "address": {
+      "line1": "BURRA BAZAR BRANCH",
+      "line2": "25, KALI KRISHNA TAGORE STREET",
+      "city": "KOLKATA",
+      "state": "West Bengal-WB",
+      "country": "INDIA",
+      "pin_code": "700007",
+      "iso_country_code": "IN"
+    },
+    "email_id": "br0223@sib.co.in",
+    "has_pan": "Yes",
+    "pan": "AABCT0022F",
+    "bsr_code_branch_code": null
+  },
+  "10": {
+    "amount_secured_by_charge_in_rs": "900000",
+    "amount_secured_by_charge_in_words": "Rupees Nine Lacs only",
+    "amount_in_foreign_currency_details": null
+  },
+  "11": {
+    "date_of_creating_security_interest": "30/06/2020",
+    "borrower_customer_account_number": null,
+    "rate_of_interest": "Interest @ Present Deposit Rate 7.05%+1.00% i.e 8.05% per annum with monthly rests",
+    "repayment_term_in_months": "On Demand",
+    "terms_of_repayment": null,
+    "nature_of_facility": "FSLD(Fresh) - Rs. 19,00,000.00",
+    "date_of_disbursement": null,
+    "miscellaneous_narrative_information": null,
+    "margin": "10.00%",
+    "extent_and_operation_of_the_charge": "The charge Operates on Fixed Deposit of the Company mentioned in\npoint 13 herein below to secure the maximum amount under the Said\nLimit fixed at Rs.\n900,000.00 together with interest, costs and charges\nthereon",
+    "others": null
+  },
+  "12": {
+    "date_of_instrument_creating_or_evidencing_the_charge": null,
+    "description_of_the_instrument_creating_or_evidencing_the_charge": null,
+    "date_of_acquisition_of_the_property": null,
+    "amount_of_the_charge_in_rs": null,
+    "particulars_of_the_property_charged": null
+  },
+  "13": {
+    "short_particulars_of_property_or_assets_charged": "Lien on KND 0223.101.13926 Dated:- 16.10.2019 for Principal Value of Rs 24,08,651/-"
+  },
+  "14": {
+    "number_of_title_documents_deposited_by_customer": null
+  },
+  "15": {
+    "is_property_not_registered_in_company_name": "No"
+  },
+  "16": {
+    "date_of_creation_or_last_modification_prior_to_present": null
+  }
+}
