@@ -56,13 +56,13 @@
   "11": {
     "date_of_creating_security_interest": "30/06/2020",
     "borrower_customer_account_number": null,
-    "rate_of_interest": "Interest @ Present Deposit Rate 7.05%+1.00% i.e 8.05% per annum with monthly rests",
+    "rate_of_interest": "Interest @ Present Deposit rate 5.40% + 2% (Spread) i.e 7.40% per annum with monthly rests",
     "repayment_term_in_months": "On Demand",
     "terms_of_repayment": null,
     "nature_of_facility": "FSLD(Fresh) - Rs. 19,00,000.00",
     "date_of_disbursement": null,
     "miscellaneous_narrative_information": null,
-    "margin": "10.00%",
+    "margin": "10%",
     "extent_and_operation_of_the_charge": "The charge Operates on Fixed Deposit of the Company mentioned in\npoint 13 herein below to secure the maximum amount under the Said\nLimit fixed at Rs.\n900,000.00 together with interest, costs and charges\nthereon",
     "others": null
   },
@@ -74,7 +74,7 @@
     "particulars_of_the_property_charged": null
   },
   "13": {
-    "short_particulars_of_property_or_assets_charged": "Lien on KND 0223.101.13926 Dated:- 16.10.2019 for Principal Value of Rs 24,08,651/-"
+    "short_particulars_of_property_or_assets_charged": "Lien on KND 0223.101.13926 Dated:- 06/03/2021 for Principal Value of Rs 10,00,000/-"
   },
   "14": {
     "number_of_title_documents_deposited_by_customer": null

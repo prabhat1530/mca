@@ -1,36 +1,19 @@
-# extract_forms_batch.py
-# ------------------------------------------------------------
-# Batch CHG-1 Extraction (Gemini multimodal):
-# - Scans a specified input directory for PDFs and common image formats.
-# - Converts PDF files to high-resolution images for analysis.
-# - Calls the Gemini API with a highly specific, example-driven prompt to ensure accuracy.
-# - Writes a separate JSON file for each processed document.
-# - Writes a separate, single-row CSV file for each document.
-# - Compiles all results into a single master CSV file (`all_records.csv`).
-#
-# FINAL REVISION: This script uses a hyper-specific, "zero-tolerance" prompt
-# that includes a perfect example and step-by-step logic to guarantee accuracy
-# on previously problematic fields (like checkboxes in sections 3 and 7).
-# It also uses CSV-safe headers (e.g., '9_pan' instead of '9.pan').
-# This is the definitive, corrected version.
-# ------------------------------------------------------------
-
 from __future__ import annotations
 import os
 import re
 import json
 import argparse
 import pathlib
-import csv
 from typing import List, Dict, Any, Optional
 
 # Third-party libraries - install using:
-# pip install google-generativeai python-dotenv Pillow pdf2image tqdm
+# pip install google-generativeai python-dotenv Pillow pdf2image tqdm pandas openpyxl
 from PIL import Image
 from tqdm import tqdm
 from dotenv import load_dotenv
 import google.generativeai as genai
 from pdf2image import convert_from_path
+import pandas as pd
 
 # Supported file extensions for processing
 SUPPORTED_EXTS = [".pdf", ".png", ".jpg", ".jpeg", ".tif", ".tiff"]
@@ -69,11 +52,11 @@ Your final output's structure and data must match the accuracy of this example.
   "9": {"category": "Scheduled bank", "name": "THE SOUTH INDIAN BANK LIMITED", "address": {"line1": "BURRA BAZAR BRANCH", "line2": "25, KALI KRISHNA TAGORE STREET", "city": "KOLKATA", "state": "West Bengal-WB", "country": "INDIA", "pin_code": "700007", "iso_country_code": "IN"}, "email_id": "br0223@sib.co.in", "has_pan": "Yes", "pan": "AABCT0022F", "bsr_code_branch_code": null},
   "10": {"amount_secured_by_charge_in_rs": "900000", "amount_secured_by_charge_in_words": "Rupees Nine Lacs only", "amount_in_foreign_currency_details": null},
   "11": {"date_of_creating_security_interest": "13/03/2021", "borrower_customer_account_number": null, "rate_of_interest": "Interest @ Present Deposit rate 5.40% + 2% (Spread) i.e 7.40% per annum with monthly rests", "repayment_term_in_months": "On Demand", "terms_of_repayment": null, "nature_of_facility": "FSLD (FRESH) - Rs. 9,00,000.00", "date_of_disbursement": null, "miscellaneous_narrative_information": null, "margin": "10%", "extent_and_operation_of_the_charge": "The charge Operates on Fixed Deposit of the Company mentioned in\npoint 13 herein below to secure the maximum amount under the Said\nLimit fixed at Rs.\n900,000.00 together with interest, costs and charges\nthereon", "others": null},
-  "12": {"date_of_instrument_creating_or_evidencing_the_charge": null, "description_of_the_instrument_creating_or_evidencing_the_charge": null, "date_of_acquisition_of_the_property": null, "amount_of_the_charge_in_rs": null, "particulars_of_the_property_charged": null},
+  "12": {"date_of_instrument_creating_or_evidencing_the_charge": None, "description_of_the_instrument_creating_or_evidencing_the_charge": None, "date_of_acquisition_of_the_property": None, "amount_of_the_charge_in_rs": None, "particulars_of_the_property_charged": None},
   "13": {"short_particulars_of_property_or_assets_charged": "KND 0223.101.13926 Dated:- 06/03/2021 for Principal Value of Rs 10,00,000/-"},
-  "14": {"number_of_title_documents_deposited_by_customer": null},
+  "14": {"number_of_title_documents_deposited_by_customer": None},
   "15": {"is_property_not_registered_in_company_name": "No"},
-  "16": {"date_of_creation_or_last_modification_prior_to_present": null}
+  "16": {"date_of_creation_or_last_modification_prior_to_present": None}
 }
 ```
 
@@ -83,7 +66,7 @@ Now, extract the data from the provided document pages into this JSON structure.
 # ---------------------------- Helper Functions ---------------------------- #
 
 def schema_template() -> Dict[str, Any]:
-    """Provides a blank schema template. Used for ordering columns in the CSV."""
+    """Provides a blank schema template. Used for ordering columns in the Excel."""
     return {
         "1": {"corporate_identity_number_cin": None, "global_location_number_gln": None},
         "2": {"name_of_the_company": None, "address_of_the_registered_office": None, "email_id_of_the_company": None},
@@ -116,26 +99,13 @@ def flatten_dict(d: Dict[str, Any], parent: str = "") -> Dict[str, Any]:
     if d is None:
         return {parent: None} if parent else {}
     for k, v in d.items():
-        # Use underscore "_" for better CSV compatibility (prevents issues with dots).
+        # Use underscore "_" for better Excel compatibility.
         key = f"{parent}_{k}" if parent else k
         if isinstance(v, dict):
             flat.update(flatten_dict(v, key))
         else:
             flat[key] = v
     return flat
-
-def get_csv_header() -> List[str]:
-    """Generates the full list of CSV headers in a consistent order."""
-    return ["_source_filename"] + list(flatten_dict(schema_template()).keys())
-
-def normalize_value_for_csv(v: Any) -> str:
-    """Converts any value to a string suitable for CSV writing."""
-    if v is None:
-        return ""
-    if isinstance(v, list):
-        # Convert list items to string and join with a semicolon
-        return "; ".join(str(x) for x in v if x is not None)
-    return str(v)
 
 def load_api_key() -> str:
     """Loads the Google API key from a .env file or environment variables."""
@@ -210,20 +180,24 @@ def write_json_output(data: Dict[str, Any], out_path: pathlib.Path) -> None:
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-def write_csv_output(
-    rows: List[Dict[str, Any]],
-    header: List[str],
-    out_path: pathlib.Path
-) -> None:
-    """Writes a list of flat dictionaries to a CSV file."""
+def write_excel_output(data_list: List[Dict[str, Any]], out_path: pathlib.Path) -> None:
+    """Writes a list of dictionaries to a single Excel sheet."""
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(out_path, "w", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=header)
-        writer.writeheader()
-        for row in rows:
-            # Normalize all values for CSV compatibility
-            normalized_row = {h: normalize_value_for_csv(row.get(h)) for h in header}
-            writer.writerow(normalized_row)
+    df = pd.DataFrame(data_list)
+    
+    # Reorder columns to match the schema
+    schema_keys = list(flatten_dict(schema_template()).keys())
+    # Add 'error' column if needed, to handle failed files
+    if 'error' in df.columns:
+        all_cols = ['_source_filename'] + schema_keys + ['error']
+    else:
+        all_cols = ['_source_filename'] + schema_keys
+    
+    # Reindex the DataFrame to ensure consistent column order
+    df = df.reindex(columns=all_cols)
+    
+    # Save to Excel
+    df.to_excel(out_path, index=False)
 
 
 # ---------------------------- Command-Line Interface ---------------------------- #
@@ -232,7 +206,8 @@ def parse_arguments() -> argparse.Namespace:
     """Sets up and parses command-line arguments."""
     parser = argparse.ArgumentParser(
         description="Batch-extract data from CHG-1 forms using Gemini.",
-        formatter_class=argparse.RawTextHelpFormatter
+        formatter_class=argparse.
+RawTextHelpFormatter
     )
     parser.add_argument(
         "--input-dir", "-i",
@@ -245,9 +220,9 @@ def parse_arguments() -> argparse.Namespace:
         help="Folder to save individual JSON output files.\n(default: ./output_json)"
     )
     parser.add_argument(
-        "--csv-out", "-c",
-        default="output_csv",
-        help="Folder to save individual and master CSV files.\n(default: ./output_csv)"
+        "--excel-out", "-e",
+        default="output_excel",
+        help="Folder to save the master Excel file.\n(default: ./output_excel)"
     )
     parser.add_argument(
         "--model", "-m",
@@ -274,9 +249,9 @@ def main() -> None:
     # Resolve and create output directories
     input_dir = pathlib.Path(args.input_dir).resolve()
     json_dir = pathlib.Path(args.json_out).resolve()
-    csv_dir = pathlib.Path(args.csv_out).resolve()
+    excel_dir = pathlib.Path(args.excel_out).resolve()
     json_dir.mkdir(parents=True, exist_ok=True)
-    csv_dir.mkdir(parents=True, exist_ok=True)
+    excel_dir.mkdir(parents=True, exist_ok=True)
 
     # Find supported files
     files_to_process = list_supported_files(input_dir)
@@ -292,9 +267,7 @@ def main() -> None:
         print(f"[FATAL] Could not initialize model: {e}")
         return
 
-    # Prepare for CSV writing
-    csv_header = get_csv_header()
-    all_results_for_master_csv: List[Dict[str, Any]] = []
+    all_results_for_master_excel: List[Dict[str, Any]] = []
 
     print(f"\n[INFO] Found {len(files_to_process)} file(s). Starting extraction...")
     # Process each file with a progress bar
@@ -305,21 +278,16 @@ def main() -> None:
                 model, fpath, dpi=args.dpi, poppler_path=args.poppler_path
             )
 
-            # Flatten the result for CSV and add source filename
+            # Flatten the result and add source filename
             flat_data = flatten_dict(extracted_data)
             flat_data["_source_filename"] = fpath.name
             
-            # --- Write Individual Outputs ---
-            # JSON
+            # --- Write Individual JSON Output ---
             json_path = json_dir / f"{fpath.stem}.json"
             write_json_output(extracted_data, json_path)
             
-            # CSV
-            per_file_csv_path = csv_dir / f"{fpath.stem}.csv"
-            write_csv_output([flat_data], csv_header, per_file_csv_path)
-
-            # Add to the list for the final master CSV
-            all_results_for_master_csv.append(flat_data)
+            # Add to the list for the final master Excel
+            all_results_for_master_excel.append(flat_data)
 
         except Exception as e:
             # Handle failures gracefully
@@ -328,26 +296,21 @@ def main() -> None:
                 "_source_filename": fpath.name,
                 "error": str(e)
             }
-            all_results_for_master_csv.append(error_record)
+            all_results_for_master_excel.append(error_record)
 
-            # Write error files for traceability
+            # Write individual error JSON for traceability
             error_json_path = json_dir / f"{fpath.stem}_error.json"
             write_json_output(error_record, error_json_path)
-            
-            error_csv_path = csv_dir / f"{fpath.stem}_error.csv"
-            write_csv_output([error_record], ["_source_filename", "error"], error_csv_path)
-
-    # --- Write Master CSV File ---
-    if all_results_for_master_csv:
-        master_csv_path = csv_dir / "all_records.csv"
-        # Add 'error' to the header if it's not there, for failed files
-        final_header = csv_header + ["error"] if any("error" in r for r in all_results_for_master_csv) else csv_header
-        write_csv_output(all_results_for_master_csv, final_header, master_csv_path)
-        print(f"\n[SUCCESS] Master CSV created at: {master_csv_path}")
+    
+    # --- Write Master Excel File ---
+    if all_results_for_master_excel:
+        master_excel_path = excel_dir / "all_records.xlsx"
+        write_excel_output(all_results_for_master_excel, master_excel_path)
+        print(f"\n[SUCCESS] Master Excel file created at: {master_excel_path}")
     
     print(f"[DONE] All processing complete.")
     print(f"  - JSON outputs are in: {json_dir}")
-    print(f"  - CSV outputs are in: {csv_dir}")
+    print(f"  - Excel outputs are in: {excel_dir}")
 
 
 if __name__ == "__main__":

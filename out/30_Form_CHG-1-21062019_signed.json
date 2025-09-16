@@ -1,0 +1,86 @@
+{
+  "1": {
+    "corporate_identity_number_cin": "L17119WB1915PLC002657",
+    "global_location_number_gln": null
+  },
+  "2": {
+    "name_of_the_company": "CALEDONIAN JUTE & INDUSTRIES LTD",
+    "address_of_the_registered_office": "9 BIPLABI TRAILOKYA MAHARAJSARANI KOLKATA Kolkata West Bengal 700001 India (c)",
+    "email_id_of_the_company": "caledonian@dataone.in"
+  },
+  "3": {
+    "form_for_registration_of": "Creation of charge"
+  },
+  "4": {
+    "applicant_is": "The Company"
+  },
+  "5": {
+    "date_of_instrument_creating_or_modifying_charge": "",
+    "nature_description_of_instrument": "",
+    "charge_created_or_modified_outside_india": ""
+  },
+  "6": null,
+  "7": {
+    "charge_on": [],
+    "others_specify": "Lien on Fixed Deposit"
+  },
+  "8": {
+    "consortium_finance_involved": "",
+    "joint_charge_involved": "",
+    "number_of_charge_holders": ""
+  },
+  "9": {
+    "category": "",
+    "name": "",
+    "address": {
+      "line1": "",
+      "line2": "",
+      "city": "",
+      "state": "",
+      "country": "",
+      "pin_code": "",
+      "iso_country_code": ""
+    },
+    "email_id": "",
+    "has_pan": "",
+    "pan": "",
+    "bsr_code_branch_code": null
+  },
+  "10": {
+    "amount_secured_by_charge_in_rs": "16700000",
+    "amount_secured_by_charge_in_words": "",
+    "amount_in_foreign_currency_details": null
+  },
+  "11": {
+    "date_of_creating_security_interest": "",
+    "borrower_customer_account_number": null,
+    "rate_of_interest": "",
+    "repayment_term_in_months": "",
+    "terms_of_repayment": null,
+    "nature_of_facility": "",
+    "date_of_disbursement": null,
+    "miscellaneous_narrative_information": null,
+    "margin": "",
+    "extent_and_operation_of_the_charge": "",
+    "others": null
+  },
+  "12": {
+    "date_of_instrument_creating_or_evidencing_the_charge": null,
+    "description_of_the_instrument_creating_or_evidencing_the_charge": null,
+    "date_of_acquisition_of_the_property": null,
+    "amount_of_the_charge_in_rs": null,
+    "particulars_of_the_property_charged": null
+  },
+  "13": {
+    "short_particulars_of_property_or_assets_charged": ""
+  },
+  "14": {
+    "number_of_title_documents_deposited_by_customer": null
+  },
+  "15": {
+    "is_property_not_registered_in_company_name": ""
+  },
+  "16": {
+    "date_of_creation_or_last_modification_prior_to_present": null
+  }
+}

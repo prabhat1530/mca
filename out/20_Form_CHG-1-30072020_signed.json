@@ -1,0 +1,88 @@
+{
+  "1": {
+    "corporate_identity_number_cin": "L17119WB1915PLC002657",
+    "global_location_number_gln": null
+  },
+  "2": {
+    "name_of_the_company": "CALEDONIAN JUTE & INDUSTRIES LTD",
+    "address_of_the_registered_office": "9 BIPLABI TRAILOKYA MAHARAJSARANI KOLKATA Kolkata West Bengal 700001 India (c)",
+    "email_id_of_the_company": "caledonian@dataone.in"
+  },
+  "3": {
+    "form_for_registration_of": "Creation of charge"
+  },
+  "4": {
+    "applicant_is": "The Company"
+  },
+  "5": {
+    "date_of_instrument_creating_or_modifying_charge": "30/06/2020",
+    "nature_description_of_instrument": "Memorandum of Charge/Lien over deposit(LD/2128) Sanction letter (LD/2100) Attestation Memo Acknowledgement of Receipt of copy of Documents(LD/2252) (c)* Whether charge is created or modified outside India Yes No",
+    "charge_created_or_modified_outside_india": "Yes"
+  },
+  "6": null,
+  "7": {
+    "charge_on": [
+      "Others"
+    ],
+    "others_specify": "Lien on Fixed Deposit"
+  },
+  "8": {
+    "consortium_finance_involved": "No",
+    "joint_charge_involved": "No",
+    "number_of_charge_holders": "1"
+  },
+  "9": {
+    "category": "Scheduled bank",
+    "name": "THE SOUTH INDIAN BANK LIMITED",
+    "address": {
+      "line1": "",
+      "line2": "25, KALI KRISHNA TAGORE STREET",
+      "city": "KOLKATA",
+      "state": "West Bengal-WB *ISO country code IN",
+      "country": "code IN",
+      "pin_code": "700007",
+      "iso_country_code": ""
+    },
+    "email_id": "br0223@sib.co.in",
+    "has_pan": "Yes",
+    "pan": "AABCT0022F",
+    "bsr_code_branch_code": null
+  },
+  "10": {
+    "amount_secured_by_charge_in_rs": "AABCT0022F",
+    "amount_secured_by_charge_in_words": "Rupees Nineteen Lacs only",
+    "amount_in_foreign_currency_details": null
+  },
+  "11": {
+    "date_of_creating_security_interest": "30/06/2020",
+    "borrower_customer_account_number": null,
+    "rate_of_interest": "Interest @8.05% (Present Deposit Rate 7.05%+1.00%)",
+    "repayment_term_in_months": ".",
+    "terms_of_repayment": null,
+    "nature_of_facility": "FSLD(Fresh) - Rs. 19,00,000.00",
+    "date_of_disbursement": null,
+    "miscellaneous_narrative_information": null,
+    "margin": "(j) *Extent and operation of the charge The charge Operates on Fixed Deposit of the Company mentioned in",
+    "extent_and_operation_of_the_charge": "(a) Date of Creating Security Interest by actual/ constructive deposit of title deeds within bank/ housing finance company 30/06/2020 (DD/MM/YYYY) (b) Borrower's customer/account number (c) * Rate of interest Interest @8.05% (Present Deposit Rate 7.05%+1.00%) (d) Repayment term (in months) . On Demand (e) * Terms of Repayment (f) Nature of facility FSLD(Fresh) - Rs. 19,00,000.00 (g) Date of Disbursement (DD/MM/YYYY) (h) Miscellaneous narrative information 10.00% (i) *Margin (j) *Extent and operation of the charge The charge Operates on Fixed Deposit of the Company mentioned in point 13 herein below to secure the maximum amount under the Said Limit fixed at Rs. 19,00,000.00 together with interest, costs and charges thereon",
+    "others": null
+  },
+  "12": {
+    "date_of_instrument_creating_or_evidencing_the_charge": null,
+    "description_of_the_instrument_creating_or_evidencing_the_charge": null,
+    "date_of_acquisition_of_the_property": null,
+    "amount_of_the_charge_in_rs": null,
+    "particulars_of_the_property_charged": null
+  },
+  "13": {
+    "short_particulars_of_property_or_assets_charged": "Lien on KND 0223.101.13028 for principal of Rs 24,08,651/- dated 18.10.2019 in the name of the company"
+  },
+  "14": {
+    "number_of_title_documents_deposited_by_customer": null
+  },
+  "15": {
+    "is_property_not_registered_in_company_name": "No"
+  },
+  "16": {
+    "date_of_creation_or_last_modification_prior_to_present": null
+  }
+}

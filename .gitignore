@@ -1,0 +1,10 @@
+pdfs/
+out_json/
+out_excel/
+out_csv/
+out_json_diffs/
+out_excel_diffs/
+out_csv_diffs/
+out_json_diffs/
+out_excel_diffs/
+out_csv_diffs/
